@@ -1,0 +1,34 @@
+#!/bin/bash
+while true
+do
+	clear
+	echo "_____________________"
+	echo "COMANDOS GENERALES"
+	echo "_____________________"
+	echo "1.VISUALIZAR HORA DEL SISTEMA"
+	echo "2.PATH O RUTA ACTUAL"
+	echo "3.CAMBIO DE PASSWORD"
+	echo "4.MOSTRAR DISCO LIBRE"
+	echo "5.MOSTRAR DISCO UTILIZADO"
+	echo "6.VISUALIZAR PROCESOS ACTIVOS"
+	echo "9.REGRESAR"
+	echo 
+	echo "SELECCIONE EL NUMERO DE LA OPCION DESEADA: \c"
+	read answer
+	case "$answer" in
+		1)echo "La hora del sistemas es:\c"
+			date '+ %X';;
+		2)echo "La ruta actual es:\c"
+			pwd;;
+		3)echo "Cambio de password"
+			passwd;;
+		4)echo $(df -BG|grep sd|awk '{print $4}'|paste -sd+|tr -d G) GiB disponibles para su uso;;
+		5)echo $(df -h --output=used) GiB En uso;;
+		6)echo "Los procesos activos del sistema son"
+			top -b -n 1;;
+		9)exit;;
+	esac
+	echo "PRESIONE ENTER PARA CONTINUAR \c"
+	read input
+	clear
+done

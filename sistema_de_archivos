@@ -1,0 +1,140 @@
+#!/bin/bash
+while true
+do
+	clear
+	echo "_________________________"
+	echo "MENU SISTEMA DE ARCHIVOS"
+	echo "_________________________"
+	echo "1.CREAR DIRECTORIO"
+	echo "2.COPIAR ARCHIVOS"
+	echo "3.MODIFICAR PERMISOS A UN ARCHIVO"
+	echo "4.VISUALIZAR EL CONTENIDO DE UN ARCHIVO"
+	echo "5.BORRAR UN ARCHIVO"
+	echo "6.CAMBIAR EL NOMBRE DE UN ARCHIVO"
+	echo "7.BORRAR UN DIRECTORIO"
+	echo "9.REGRESAR"
+	echo 
+	echo "SELECCIONE EL NUMERO DE LA OPCION DESEADA: \c"
+	read answer
+	case "$answer" in
+		1)echo "Escriba el nombre del directorio a crear: \c"
+		  read directorio
+		  if [ -d "$directorio" ]; then
+			echo "El directorio ya existe o su nombre es incorrecto"
+		  else
+			mkdir $directorio
+			echo "Directorio /" $directorio " creado con exito"
+		  fi
+		  ;;
+		2)echo "Lista de archivos existentes:"
+		  find . -maxdepth 1 -type f
+		  echo "Ingrese nombre del archivo a copiar: \c"
+		  read archivo
+		  echo "Elija la carpeta donde desea copiar el archivo sin ./ : \c"
+		  read ruta
+		  if [ -f "$archivo" ]; then
+			cp $archivo $ruta
+			echo "Archivo copiado en:/" $ruta
+		  else
+			echo "El archivo no existe o la ruta ingresada no es correcta"
+		  fi
+		  ;;
+		3)echo "Lista de archivos con respectivos permisos"
+		  ls -l
+		  echo "Digite si es un archivo o un directorio (f/d): \c"
+		  read files
+		  case "$files" in
+			d)find . -maxdepth 1 -type d
+			  echo "Ingrese el nombre del directorio que desea configurar los permisos sin ./: \c"
+			  read directory
+			  if [ -d "$directory" ]; then
+			  	echo "Digite el numero octal ej: 777 para configurar los permisos: \c"
+				read octal1
+				chmod $octal1 $directory
+				ls -l
+			  else
+				echo "El directorio no existe"
+			  fi
+			;;
+			f)find . -maxdepth 1 -type f
+			  echo "Ingrese el nombre del archivo que desea configurar los permisos sin ./: \c"
+			  read file
+			  if [ -f "$file" ]; then
+			  	echo "Digite el numero octal ej: 744 para configurar los permisos: \c"
+				read octal2
+				chmod $octal2 $file
+				ls -l
+			  else
+				echo "El directorio no existe"
+			  fi
+			;;
+		  esac
+		  ;;
+		4)echo "Lista de archivos existentes: "
+		  find . -maxdepth 1 -type f
+		  echo "Ingrese el nombre del archivo a visualizar: \c"
+		  read visualizar
+		  if [ -f "$visualizar" ]; then 
+			cat $visualizar
+		  else
+			echo "El archivo no existe"
+		  fi
+		  ;;
+		5)echo "Lista de archivos existentes: "
+		  find . -maxdepth 1 -type f
+		  echo "Ingrese el nombre del archivo a borrar sin ./: \c"
+		  read borrarArchivo
+		  if [ -f "$borrarArchivo" ]; then
+			echo "Esta seguro de eliminar el siguiente archivo" $borrarArchivo "(y/n) \c "
+			read respuesta
+			case "$respuesta" in
+				y)echo $borrarArchivo "ha sido eliminado"
+				  rm $borrarArchivo
+				;;
+				n)echo "Se ha cancelado la operacion";;
+			esac 
+		  else
+			echo "El archivo no existe"
+		  fi
+		  ;;
+		6)echo "Lista de archivos existentes: "	
+		  find . -maxdepth 1 -type f
+		  echo "Ingrese el nombre del archivo que quiere cambiar nombre sin ./: \c"
+		  read cambiar
+		  if [ -f "$cambiar" ]; then
+			echo "Esta seguro que quiere modificar el nombre de" $cambiar"(y/n) \c "
+			read cambio
+			echo "Ingrese el nuevo nombre para el archivo: \c"
+			read nuevo
+			case "$cambio" in
+				y)mv $cambiar $nuevo 
+				  echo "Se ha cambiado el nombre del archivo por:" $nuevo
+				;;
+				n)echo "Se ha cancelado la operacion";;
+			esac
+		  else
+			echo "El archivo seleccionado no existe"
+		  fi
+		  ;;
+		7)echo "Lista de directorios existentes: "
+		  find . -maxdepth 1 -type d
+		  echo "Ingrese el nombre del directorio que desea borrar sin ./: \c"
+		  read borrarDirectorio
+		  if [ -d "$borrarDirectorio" ]; then
+			echo "Esta seguro que quiere eliminar el directorio" $borrarDirectorio"(y/n) \c"
+			read eliminar
+			case "$eliminar" in
+				y)echo "El directorio" $borrarDirectorio "ha sido eliminado"
+				  rm -r $borrarDirectorio
+				;;
+				n)echo "Operacion cancelada";;
+			esac
+		  else
+			echo "El directorio no existe"
+		  fi
+		  ;;
+		9)exit;;
+	esac
+	echo "PRESIONE ENTER PARA CONTINUAR: \c"
+	read input
+done

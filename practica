@@ -1,0 +1,25 @@
+#!/bin/bash
+while true
+do
+	clear
+	echo "_______________"
+	echo "Menu principal"
+	echo "_______________"
+	echo "1.COMANDOS GENERALES"
+	echo "2.USUARIOS"
+	echo "3.SISTEMA DE ARCHIVOS"
+	echo "9.TERMINAR"
+	echo 
+	echo "SELECCIONE EL NUMERO DE LA OPCION DESEADA: \c"
+	read answer
+	case "$answer" in
+		1)sh comandos_generales;;
+		2)sh usuarios;;
+		3)sh sistema_de_archivos;;
+		9)clear
+			exit;;
+	esac
+	echo "PRESIONE LA TECLA ENTER PARA CONTINUAR \c"
+	read input
+	clear
+done

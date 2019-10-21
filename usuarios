@@ -1,0 +1,26 @@
+#!/bin/bash
+while true
+do
+	clear
+	echo "_____________________"
+	echo "MENU VARIOS USUARIOS"
+	echo "_____________________"
+	echo "1.MOSTRAR NOMBRE DE LOS USUARIOS CONECTADOS"
+	echo "2.MOSTRAR NUMERO DE USUARIOS CONECTADOS"
+	echo "3.AVERIGUAR SI UN USUARIO ESTA CONECTADO"
+	echo "4.ENVIAR MENSAJE A UN USUARIO"
+	echo "9.REGRESAR"
+	echo 
+	echo "SELECCIONE EL NUMERO DE LA OPCION DESEADA: \c"
+	read answer
+	case "$answer" in 
+		1)who;;
+		2)who|cut -d " " -f 1|sort -u|wc -l;;
+		3)users|xargs -n1 echo|sort|uniq -c;;
+		4)write;;
+		9)exit;;
+	esac
+	echo "PRESIONE ENTER PARA CONTINUAR \c"
+	read input
+	clear
+done
