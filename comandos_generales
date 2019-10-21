@@ -23,7 +23,7 @@ do
 		3)echo "Cambio de password"
 			passwd;;
 		4)echo $(df -BG|grep sd|awk '{print $4}'|paste -sd+|tr -d G) GiB disponibles para su uso;;
-		5)echo $(df -h --output=used) GiB En uso;;
+		5)df -h --output=used;;
 		6)echo "Los procesos activos del sistema son"
 			top -b -n 1;;
 		9)exit;;
